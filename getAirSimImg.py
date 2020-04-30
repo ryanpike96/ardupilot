@@ -24,7 +24,7 @@ if __name__ == '__main__':
     while True:
 
 
-        apiRequest = client.SimGetImages([airsim.ImageRequest("0",airsim.ImageType.Scene, False, False)])
+        apiRequest = client.simGetImages([airsim.ImageRequest("0",airsim.ImageType.Scene)])
         apiSingle = apiRequest[0]
 
 
@@ -32,14 +32,13 @@ if __name__ == '__main__':
         timestamp = apiSingle.time_stamp
         now = time.time()
         dt = now - lastt
-        png_image = client.simGetImage("0", airsim.ImageType.Scene)
 
         # Groundtruth timestamp, x,y,z,q1,q2,q3,q4
         groundtruth_pos = apiSingle.camera_position
         
 
 
-        if png_image is None:
+        if encodedImage is None:
             continue
 
         img = cv2.imdecode(numpy.fromstring(encodedImage, dtype=numpy.uint8),cv2.IMREAD_COLOR)

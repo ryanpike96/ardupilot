@@ -70,14 +70,17 @@ void AirSim::set_interface_ports(const char* address, const int port_in, const i
 /*
 	Decode and send servos
 */
+
 void AirSim::output_copter(const struct sitl_input &input)
 {
+   
     servo_packet pkt;
-
+    
 	for (uint8_t i=0; i<kArduCopterRotorControlCount; i++) {
 		pkt.pwm[i] = input.servos[i];
 	}
-
+    
+    
 	ssize_t send_ret = sock.sendto(&pkt, sizeof(pkt), airsim_ip, airsim_control_port);
 	if (send_ret != sizeof(pkt)) {
 		if (send_ret <= 0) {
@@ -86,7 +89,7 @@ void AirSim::output_copter(const struct sitl_input &input)
 		} else {
 			printf("Sent %ld bytes instead of %lu bytes\n", (long)send_ret, (unsigned long)sizeof(pkt));
 		}
-	}
+    }
 }
 
 void AirSim::output_rover(const struct sitl_input &input)
@@ -303,11 +306,14 @@ void AirSim::recv_fdm()
 
     scanner.points = state.lidar.points;
 
+    /*
     rcin_chan_count = state.rc.rc_channels.length < 8 ? state.rc.rc_channels.length : 8;
+    
     for (uint8_t i=0; i < rcin_chan_count; i++) {
-        rcin[i] = state.rc.rc_channels.data[i];
+        //rcin[i] = state.rc.rc_channels.data[i];
     }
-
+    */
+    
 #if 0
     AP::logger().Write("ASM1", "TimeUS,TUS,R,P,Y,GX,GY,GZ",
                        "QQffffff",
