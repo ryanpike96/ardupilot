@@ -82,10 +82,10 @@ class UARTDecoder(object):
             ret = Packet(self.buf)
             self.buf = ''
             if ret.crc_ok():
-                if ret.counter != self.last_counter+1:
+               if ret.counter != self.last_counter+1:
                     print("LOST! %u %u\n", ret.counter, self.last_counter+1)
-                self.last_counter = ret.counter
-                return ret
+                    self.last_counter = ret.counter
+            return ret
         return None
 
     def add_data(self, msg):
